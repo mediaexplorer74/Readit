@@ -1,12 +1,17 @@
-﻿using Readit.View;
+﻿using Readit.Views;
+using System.Net.Http;
 using Xamarin.Forms;
 
 namespace Readit
 {
+    
+
     public partial class App
     {
         public App()
-        {
+        {                      
+
+            // Xamarin.Forms.Core
             MainPage = new NavigationPage();
         }
 

@@ -1,4 +1,4 @@
-## Readit
+## Readit v1.0.0-alpha
 My attempt to assemble lite (minimal) version of famous "Readit" W8.1/W10M app.
 
 I prepared to Reddit API "switch off", hehe :)

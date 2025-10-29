@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
@@ -23,12 +23,19 @@ namespace Readit.Presenters
             _client.DefaultRequestHeaders.Add("User-Agent",
                 "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36");
 
-            string request = "https://www.reddit.com" + commentPermalink + ".json";
+            // Normalize permalink: ensure leading '/', remove trailing '/'
+            string p = commentPermalink ?? string.Empty;
+            p = p.Trim();
+            if (!p.StartsWith("/")) p = "/" + p;
+            p = p.TrimEnd('/');
+
+            string request = "https://www.reddit.com" + p + ".json";
+            Debug.WriteLine("[CommentPresenter] Request: " + request);
+
             string json = default;
 
             try
             {
-
                 json = await _client.GetStringAsync(request);
             }
             catch (Exception ex)

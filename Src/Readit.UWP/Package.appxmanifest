@@ -9,12 +9,12 @@
   <Identity
     Name="ME.ReaditV1"
     Publisher="CN=Admin"
-    Version="1.0.0.0" />
+    Version="1.2.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="ec6c1141-fd01-485c-81be-68815c480690" PhonePublisherId="11000038-0000-0060-0000-000000001100"/>
 
   <Properties>
-    <DisplayName>Readit 1.0-alpha</DisplayName>
+    <DisplayName>Readit 1.2</DisplayName>
     <PublisherDisplayName>mediaexplorer</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -32,7 +32,7 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="Readit.UWP.App">
       <uap:VisualElements
-        DisplayName="Readit 1.0-alpha"
+        DisplayName="Readit 1.2"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
         Description="Readit.UWP"
@@ -42,7 +42,8 @@
         <uap:InitialRotationPreference>
           <uap:Rotation Preference="landscape"/>
           <uap:Rotation Preference="portrait"/>
-          <uap:Rotation Preference="landscapeFlipped"/></uap:InitialRotationPreference>
+          <uap:Rotation Preference="landscapeFlipped"/>
+          <uap:Rotation Preference="portraitFlipped"/></uap:InitialRotationPreference>
       </uap:VisualElements>
     </Application>
   </Applications>

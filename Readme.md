@@ -1,12 +1,15 @@
-## Readit v1.0.0-alpha
-My attempt to assemble lite (minimal) version of famous "Readit" W8.1/W10M app.
+## Readit v1.2-alpha - master branch
+![](Images/logo.png)
 
-I prepared to Reddit API "switch off", hehe :)
+Planned as simplest (read-only) CometDog's multi-platform Readit app (focus: Astoria-compatible UWP).
 
 ## Screenshots
 ![Win 11 1](Images/shot1.png)
 ![Win 11 2](Images/shot2.png)
 ![Lumia 640XL 1](Images/shot3.png)
+
+## Status
+- Pre-alpha / Alpha / Proto
 
 ## Tech. details
 - AppType: UWP; Android; iOS
@@ -21,13 +24,14 @@ I prepared to Reddit API "switch off", hehe :)
 - Background post topics updates + notifications
 - "Favorites" storing, app settings, caching... idk :)
 
-## References
-- https://github.com/CometDog/Readit
-- https://github.com/CometDog
+## References / Credits
+- https://github.com/CometDog/Readit Original Reddit client replica (android and ios only)
+- https://github.com/CometDog Original Readit author
 
 ## ..
-As is. No support. DIY
+As is. No support. DIY.
 
 ## .
-[m][e] 2023
+[m][e] 2025
+![](Images/footer.png)
 

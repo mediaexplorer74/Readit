@@ -1,6 +1,7 @@
 //PostView
 
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using Readit.Contracts;
 using Readit.Models;
 using Readit.Navigators;
@@ -18,8 +19,6 @@ namespace Readit.Views
         {
             _presenter = new PostPresenter(this);
             _navigator = new PostNavigator(this);
-
-            SubscribeToMessages();
 
             InitializeComponent();
 
@@ -50,9 +49,7 @@ namespace Readit.Views
             {
                 if (arg != null)
                 {
-                    // Delete last char of string 
-                    arg = arg.TrimEnd('/');
-
+                    Debug.WriteLine("[PostView] Received permalink: " + arg);
                     _navigator.ShowCommentScreen(arg);
                 }
             });
@@ -78,6 +75,19 @@ namespace Readit.Views
         {
             if (title == "") title = "Front Page";
             Title = title;
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            SubscribeToMessages();
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            MessagingCenter.Unsubscribe<PostViewCell, string>(this, "PostClicked");
+            MessagingCenter.Unsubscribe<SearchView, string>(this, "UpdateSubreddit");
         }
     }
 }

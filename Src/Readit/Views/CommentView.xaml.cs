@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Readit.Contracts;
 using Readit.Models;
@@ -12,6 +12,7 @@ namespace Readit.Views
     {
         private readonly CommentContract.INavigator _navigator;
         private readonly CommentContract.IPresenter _presenter;
+        private PostsCommentModel _post; // holds t3 post for header
 
         public CommentView(string commentPermalink)
         {
@@ -42,45 +43,38 @@ namespace Readit.Views
         // AddComments
         public void AddComments(List<PostsModel> models)
         {
-            foreach (PostsModel model in models)
+            // Reddit returns an array: [0] = post (t3), [1] = comments (t1)
+            if (models == null || models.Count == 0) return;
+
+            // Extract post (t3) as header if available
+            var first = models[0];
+            if (first?.Data?.Children != null)
             {
-                //List<PostsCommentModel> commentList = new List<PostsCommentModel>();
-
-                foreach (PostsChildrenModel childrenModel in model.Data.Children)
+                foreach (var child in first.Data.Children)
                 {
-                    //RnD : if (childrenModel.Kind == "t1")
-                    if ((childrenModel.Kind == "t3") || (childrenModel.Kind == "t1"))
+                    if (child.Kind == "t3")
                     {
-                        childrenModel.Kind = "k";
-                        childrenModel.Data.Author = childrenModel.Kind;//"[Author]";
-                        childrenModel.Data.Body = "b";
-                        childrenModel.Data.Created = "c";
-                        //childrenModel.Data.Replies = "Replies";
-
-                        //commentList.Add(childrenModel.Data);
-                        Comments.Add(childrenModel.Data);
+                        _post = child.Data;
+                        SetHeader(_post);
+                        break;
                     }
                 }
+            }
 
-                /*
-                if (commentList.Count > 0)
+            // Extract comments (t1) from the rest of arrays
+            for (int i = 1; i < models.Count; i++)
+            {
+                var model = models[i];
+                if (model?.Data?.Children == null) continue;
+
+                foreach (var child in model.Data.Children)
                 {
-                    foreach (var comment in commentList)
+                    if (child.Kind == "t1")
                     {
-                        PostsCommentModel item = default;
-
-                        item.Author = comment.Author;
-                        item.Body = comment.Body;
-                        //item.Kind = comment.Kind;
-                        item.Created = comment.Created;
-                        item.Replies = default;
-                        Comments.Add(item);
+                        Comments.Add(child.Data);
                     }
-                    
-                    //Comments.Add(commentList);
                 }
-                */
-            }//foreach..
+            }
         }//AddComments
 
         private void SubscribeToMessages()
@@ -129,6 +123,35 @@ namespace Readit.Views
                 title = "Comments Page";
             }
             Title = title;
+        }
+
+        private void SetHeader(PostsCommentModel post)
+        {
+            if (post == null) return;
+
+            var headerLayout = new StackLayout
+            {
+                Padding = new Thickness(16, 12),
+                Spacing = 6
+            };
+
+            var titleLabel = new Label
+            {
+                FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
+                Text = post.Title
+            };
+
+            var bodyLabel = new Label
+            {
+                FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label)),
+                LineBreakMode = LineBreakMode.WordWrap,
+                Text = string.IsNullOrWhiteSpace(post.Selftext) ? "" : post.Selftext
+            };
+
+            headerLayout.Children.Add(titleLabel);
+            headerLayout.Children.Add(bodyLabel);
+
+            CommentListView.Header = headerLayout;
         }
     }
 }

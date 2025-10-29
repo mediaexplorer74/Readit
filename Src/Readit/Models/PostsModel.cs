@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace Readit.Models
@@ -37,5 +37,16 @@ namespace Readit.Models
 
         [JsonProperty(PropertyName = "replies")]
         public PostsModel Replies { get; set; }
+
+        // The following fields are present for the root post object (kind == "t3").
+        // They will be null for regular comments (kind == "t1").
+        [JsonProperty(PropertyName = "title")]
+        public string Title { get; set; }
+
+        [JsonProperty(PropertyName = "selftext")]
+        public string Selftext { get; set; }
+
+        [JsonProperty(PropertyName = "url")]
+        public string Url { get; set; }
     }
 }

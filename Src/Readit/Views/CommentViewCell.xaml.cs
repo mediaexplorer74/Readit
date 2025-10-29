@@ -1,4 +1,4 @@
-﻿using Readit.Models;
+using Readit.Models;
 
 namespace Readit.Views
 {
@@ -20,7 +20,7 @@ namespace Readit.Views
 
         private void SetTextViews(PostsCommentModel item)
         {
-            Title.Text = "Test";
+            Title.Text = string.Empty;
             Body.Text = item.Body;
             Author.Text = item.Author;
             Replies.Text= ( item.Replies == null ? "" : item.Replies.ToString() );

@@ -17,13 +17,15 @@ namespace Readit.Views
             base.OnBindingContextChanged();
             if (!(BindingContext is SubredditPostModel item)) return;
 
-            TapGestureRecognizer gesture = new TapGestureRecognizer();
-            
-            gesture.Tapped += (sender, eventArgs) => 
-            { 
-                MessagingCenter.Send(this, "PostClicked", item.Permalink); 
-            };
+            Content.GestureRecognizers.Clear();
 
+            var permalink = NormalizePermalink(item.Permalink);
+
+            TapGestureRecognizer gesture = new TapGestureRecognizer();
+            gesture.Tapped += (sender, eventArgs) =>
+            {
+                MessagingCenter.Send(this, "PostClicked", permalink);
+            };
             Content.GestureRecognizers.Add(gesture);
 
             SetTextViews(item);
@@ -35,6 +37,9 @@ namespace Readit.Views
             Title.Text = item.Title;
             Subreddit.Text = item.Subreddit;
             Author.Text = item.Author;
+
+            // DEBUG only
+            URL.Text = item.Url;
         }
 
         private void SetThumbnail(SubredditPostModel item)
@@ -71,6 +76,15 @@ namespace Readit.Views
             gesture.Tapped += (sender, eventArgs) => { Device.OpenUri(new Uri(url)); };
 
             Thumbnail.GestureRecognizers.Add(gesture);
+        }
+
+        private string NormalizePermalink(string permalink)
+        {
+            if (string.IsNullOrWhiteSpace(permalink)) return permalink;
+            var p = permalink.Trim();
+            if (!p.StartsWith("/")) p = "/" + p;
+            p = p.TrimEnd('/');
+            return p;
         }
     }
 }

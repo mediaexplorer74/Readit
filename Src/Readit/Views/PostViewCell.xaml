@@ -8,7 +8,10 @@
             <Label FontSize="Medium" x:Name="Title" />
             <StackLayout Orientation="Horizontal">
                 <Label FontSize="Micro" LineBreakMode="TailTruncation" x:Name="Subreddit" />
+                
                 <Label FontSize="Micro" LineBreakMode="TailTruncation" x:Name="Author" />
+                <!-- TEMP / DEBUG only -->
+                <Label FontSize="Micro" LineBreakMode="TailTruncation" x:Name="URL" />
             </StackLayout>
         </StackLayout>
         <Image IsVisible="false" WidthRequest="50" HeightRequest="50" x:Name="Thumbnail" HorizontalOptions="End" />

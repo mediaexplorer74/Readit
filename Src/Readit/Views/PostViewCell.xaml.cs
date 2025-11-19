@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using Readit.Models;
 using Xamarin.Forms;
@@ -17,15 +18,13 @@ namespace Readit.Views
             base.OnBindingContextChanged();
             if (!(BindingContext is SubredditPostModel item)) return;
 
-            Content.GestureRecognizers.Clear();
-
-            var permalink = NormalizePermalink(item.Permalink);
-
             TapGestureRecognizer gesture = new TapGestureRecognizer();
-            gesture.Tapped += (sender, eventArgs) =>
-            {
-                MessagingCenter.Send(this, "PostClicked", permalink);
+            
+            gesture.Tapped += (sender, eventArgs) => 
+            { 
+                MessagingCenter.Send(this, "PostClicked", item.Permalink); 
             };
+
             Content.GestureRecognizers.Add(gesture);
 
             SetTextViews(item);
@@ -46,7 +45,7 @@ namespace Readit.Views
         {
             Thumbnail.IsVisible = true;
 
-            ImageSource imageSource;
+            ImageSource imageSource = default;
             switch (item.Thumbnail)
             {
                 case "":
@@ -62,29 +61,28 @@ namespace Readit.Views
                         "Readit.Resources.Images.icon_nsfw.png");
                     break;
                 default:
-                    imageSource = ImageSource.FromUri(new Uri(item.Thumbnail));
+                    try
+                    {
+                        imageSource = ImageSource.FromUri(new Uri(item.Thumbnail));
+                    }
+                    catch (Exception ex) 
+                    {
+                        Debug.WriteLine("[ex] Set SetThumbnail error: " + ex.Message);
+                    }
+
                     break;
             }
 
             Thumbnail.Source = imageSource;
 
             string url = item.Url != null
-                ? item.Url.Replace("&amp;", "&")
-                : item.Preview.Images.First().Source.Url.Replace("&amp;", "&");
+                ? item.Url.Replace("&", "&")
+                : item.Preview?.Images?.FirstOrDefault()?.Source?.Url?.Replace("&", "&") ?? item.Url;
 
             TapGestureRecognizer gesture = new TapGestureRecognizer();
             gesture.Tapped += (sender, eventArgs) => { Device.OpenUri(new Uri(url)); };
 
             Thumbnail.GestureRecognizers.Add(gesture);
-        }
-
-        private string NormalizePermalink(string permalink)
-        {
-            if (string.IsNullOrWhiteSpace(permalink)) return permalink;
-            var p = permalink.Trim();
-            if (!p.StartsWith("/")) p = "/" + p;
-            p = p.TrimEnd('/');
-            return p;
         }
     }
 }

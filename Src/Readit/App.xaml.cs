@@ -17,7 +17,9 @@ namespace Readit
 
         protected override void OnStart()
         {
-            MainPage.Navigation.PushAsync(new PostView());
+            // Инициализируем главную страницу с популярными постами
+            var postView = new PostView();
+            MainPage.Navigation.PushAsync(postView);
         }
 
         protected override void OnSleep()

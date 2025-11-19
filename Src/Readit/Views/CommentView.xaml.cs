@@ -27,7 +27,6 @@ namespace Readit.Views
             SearchItem.Clicked += (sender, args) => _navigator.ShowSearchScreen();
 
             Comments = new ObservableCollection<PostsCommentModel>();
-            //CommentListView.ItemsSource = Comments;
             
             CommentListView.ItemsSource = Comments;
             _presenter.UpdateComments(commentPermalink);
@@ -62,6 +61,9 @@ namespace Readit.Views
             }
 
             // Extract comments (t1) from the rest of arrays
+            int commentCount = 0;
+            //const int maxComments = 10; // Ограничиваем количество комментариев до 10
+            
             for (int i = 1; i < models.Count; i++)
             {
                 var model = models[i];
@@ -69,11 +71,14 @@ namespace Readit.Views
 
                 foreach (var child in model.Data.Children)
                 {
-                    if (child.Kind == "t1")
+                    if (child.Kind == "t1")// && commentCount < maxComments)
                     {
                         Comments.Add(child.Data);
+                        commentCount++;
                     }
                 }
+                
+                //if (commentCount >= maxComments) break; // Прекращаем, если достигли лимита
             }
         }//AddComments
 
@@ -129,29 +134,9 @@ namespace Readit.Views
         {
             if (post == null) return;
 
-            var headerLayout = new StackLayout
-            {
-                Padding = new Thickness(16, 12),
-                Spacing = 6
-            };
-
-            var titleLabel = new Label
-            {
-                FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
-                Text = post.Title
-            };
-
-            var bodyLabel = new Label
-            {
-                FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label)),
-                LineBreakMode = LineBreakMode.WordWrap,
-                Text = string.IsNullOrWhiteSpace(post.Selftext) ? "" : post.Selftext
-            };
-
-            headerLayout.Children.Add(titleLabel);
-            headerLayout.Children.Add(bodyLabel);
-
-            CommentListView.Header = headerLayout;
+            PostTitle.Text = post.Title;
+            PostAuthor.Text = $"by {post.Author}";
+            PostBody.Text = string.IsNullOrWhiteSpace(post.Selftext) ? "No text content" : post.Selftext;
         }
     }
 }

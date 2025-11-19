@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
@@ -23,15 +23,7 @@ namespace Readit.Presenters
             _client.DefaultRequestHeaders.Add("User-Agent",
                 "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36");
 
-            // Normalize permalink: ensure leading '/', remove trailing '/'
-            string p = commentPermalink ?? string.Empty;
-            p = p.Trim();
-            if (!p.StartsWith("/")) p = "/" + p;
-            p = p.TrimEnd('/');
-
-            string request = "https://www.reddit.com" + p + ".json";
-            Debug.WriteLine("[CommentPresenter] Request: " + request);
-
+            string request = "https://www.reddit.com" + commentPermalink + ".json";
             string json = default;
 
             try
@@ -42,6 +34,10 @@ namespace Readit.Presenters
             {
                 Debug.WriteLine("[ex] Error parsing " + request + ": " + ex.Message);
                 return;
+            }
+            finally
+            {
+                _client.Dispose();
             }
 
             List<PostsModel> comments = JsonConvert.DeserializeObject<List<PostsModel>>(json);

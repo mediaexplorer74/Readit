@@ -3,20 +3,14 @@
 <ViewCell xmlns="http://xamarin.com/schemas/2014/forms"
           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
           x:Class="Readit.Views.CommentViewCell">
-    <StackLayout Orientation="Horizontal" Padding="16,8">
+    <StackLayout Orientation="Horizontal" Padding="16,8" Spacing="8">
         <StackLayout x:Name="Content" Orientation="Vertical" HorizontalOptions="FillAndExpand">
-            
-            <!--Label FontSize="Medium" x:Name="Body" /-->
-            <Label FontSize="Medium" x:Name="Title" />
-            <StackLayout Orientation="Horizontal">
-                <!--Label FontSize="Micro" LineBreakMode="TailTruncation" x:Name="Title" /-->
-                <Label FontSize="Micro" LineBreakMode="TailTruncation" x:Name="Kind" />
-                <Label FontSize="Micro" LineBreakMode="TailTruncation" x:Name="Body" />
-                <Label FontSize="Micro" LineBreakMode="TailTruncation" x:Name="Replies" />
-                <Label FontSize="Micro" LineBreakMode="TailTruncation" x:Name="Author" />
-                <Label FontSize="Micro" LineBreakMode="TailTruncation" x:Name="Created" />
-                <Label FontSize="Micro" LineBreakMode="TailTruncation" x:Name="TimeSincePosted" />
+            <StackLayout Orientation="Horizontal" Spacing="5">
+                <Label FontSize="Micro" Text="by" TextColor="Gray" />
+                <Label FontSize="Micro" x:Name="Author" TextColor="Gray" />
+                <Label FontSize="Micro" x:Name="TimeSincePosted" TextColor="Gray" />
             </StackLayout>
+            <Label FontSize="Small" x:Name="Body" LineBreakMode="WordWrap" Margin="0,5,0,0" />
         </StackLayout>
         <Image IsVisible="false" WidthRequest="50" HeightRequest="50" x:Name="Thumbnail" HorizontalOptions="End" />
     </StackLayout>

@@ -19,9 +19,8 @@ namespace Readit.Presenters
 
         public async void UpdatePosts(string subreddit = "")
         {
-
             HttpClient _client = new HttpClient();
-            _client.DefaultRequestHeaders.Add("User-Agent", 
+            _client.DefaultRequestHeaders.Add("User-Agent",
                 "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36");
 
             string request = "https://www.reddit.com" + subreddit + ".json";
@@ -29,13 +28,16 @@ namespace Readit.Presenters
 
             try
             {
-                
                 json = await _client.GetStringAsync(request);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine("[ex] Error parsing " + request + ": "+ ex.Message);
                 return;
+            }
+            finally
+            {
+                _client.Dispose();
             }
 
             SubredditModel frontPage = JsonConvert.DeserializeObject<SubredditModel>(json);

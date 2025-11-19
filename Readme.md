@@ -4,8 +4,6 @@ My attempt to assemble lite (minimal) version of famous "Readit" W8.1/W10M app.
 I prepared to Reddit API "switch off", hehe :)
 
 ## Screenshots
-![Win 11 1](Images/shot1.png)
-![Win 11 2](Images/shot2.png)
 ![Lumia 640XL 1](Images/shot3.png)
 
 ## What's new? 

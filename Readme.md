@@ -1,4 +1,4 @@
-## Readit v1.0.0-alpha
+## Readit v1.3.0-alpha
 My attempt to assemble lite (minimal) version of famous "Readit" W8.1/W10M app.
 
 I prepared to Reddit API "switch off", hehe :)
@@ -7,6 +7,10 @@ I prepared to Reddit API "switch off", hehe :)
 ![Win 11 1](Images/shot1.png)
 ![Win 11 2](Images/shot2.png)
 ![Lumia 640XL 1](Images/shot3.png)
+
+## What's new? 
+-  Improved main page ("posts view")
+- "Reddit Details mode" (Author's post, Comments)
 
 ## Tech. details
 - AppType: UWP; Android; iOS
@@ -17,7 +21,6 @@ I prepared to Reddit API "switch off", hehe :)
 "A read-only Reddit client in Xamarin"
 
 ## TODO
-- Fix "Reddit Details mode" (Author, Comments / Replies, view, etc.)
 - Background post topics updates + notifications
 - "Favorites" storing, app settings, caching... idk :)
 
@@ -29,5 +32,5 @@ I prepared to Reddit API "switch off", hehe :)
 As is. No support. DIY
 
 ## .
-[m][e] 2023
+[m][e] Nov, 19 2025
 
